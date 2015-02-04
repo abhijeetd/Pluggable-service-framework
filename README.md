@@ -13,9 +13,10 @@ There are mainly 4 main components:
 * **ServiceContextProvider** - Context provider that returns an instance of service specific ServiceContext
 * **Service** - Actual service that implements specific functionality
 * **Plugin** - One or more plugins that can be injected into the service for specific processing 
+ 
 
 
-1. Create service specific ServiceContext extending *ServiceContext* class
+Create service specific ServiceContext extending *ServiceContext* class
 
 ```
       public class SampleServiceContext : ServiceContext
@@ -24,7 +25,7 @@ There are mainly 4 main components:
       }
 ```   
 
-2. Create context provider by implementing *IContextProvider* interface
+Create context provider by implementing *IContextProvider* interface
 
 ```
       public class SampleContextProvider : IContextProvider
@@ -32,22 +33,21 @@ There are mainly 4 main components:
             public ServiceContext GetServiceContext()
             {
                   var registeredPlugins = new List<Plugin>();
-                  registeredPlugins.Add(new Plugin 
-                  { 
-                        Classname = "PluggableService.Sample.SamplePlugin, PluggableService.Sample" 
+                  registeredPlugins.Add(new Plugin { 
+                  Classname = "PluggableService.Sample.SamplePlugin, PluggableService.Sample" 
                   });
 
-            return new SampleServiceContext 
-                  { 
-                        SampleProperty = "test data", 
-                        Plugins = registeredPlugins 
-                  };
-        }
+                  return new SampleServiceContext 
+                        { 
+                              SampleProperty = "test data", 
+                              Plugins = registeredPlugins 
+                        };
+            }
     }
 ```   
 
 
-3. Create your service class by extending *BaseService* class
+Create your service class by extending *BaseService* class
 
 ```
       public class HelloWorldService : BaseService
@@ -61,7 +61,7 @@ There are mainly 4 main components:
       }
 ```
 
-4. Create custom plugin by extending *Plugin* class
+Create custom plugin by extending *Plugin* class
 
 ```
       public class SamplePlugin : Plugin
