@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace PluggableService.Framework
 {
-    public interface IService
+    public interface IContextProvider
     {
-        void Execute(IContextProvider contextProvider);
+        ServiceContext GetServiceContext();
     }
 }

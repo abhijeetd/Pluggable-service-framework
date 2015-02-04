@@ -10,9 +10,9 @@ namespace PluggableService.Framework
     {
         private bool IsInitialized { get; set; }
         protected PluginManager PluginService { get; set; }
-        public void Execute()
+        public void Execute(IContextProvider contextProvider)
         {
-            var context = OnInitialize();
+            var context = contextProvider.GetServiceContext();
             if (context != null)
             {
                 if (PluginService == null)
@@ -26,7 +26,6 @@ namespace PluggableService.Framework
             }
         }
 
-        protected abstract ServiceContext OnInitialize();
         protected abstract void Run(ServiceContext context);
     }
 }

@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="HelloWorldService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SampleContextProvider.cs" />
     <Compile Include="SamplePlugin.cs" />
     <Compile Include="SampleServiceContext.cs" />
   </ItemGroup>

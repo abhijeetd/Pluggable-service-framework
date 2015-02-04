@@ -1,4 +1,5 @@
 ﻿using PluggableService.Framework;
+using PluggableService.Sample;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +29,7 @@ namespace PluggableService.Container.Console
                 System.Console.WriteLine("Invalid service name.");
                 return;
             }
-            service.Execute();
+            service.Execute(new SampleContextProvider());
         }
     }
 }
