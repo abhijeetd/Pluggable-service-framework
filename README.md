@@ -2,37 +2,68 @@
 
 A simple framework to get started with building extensible application that is based on pluggable architecture.
 
-The code base also has a sample implementation.
+
+* See [PluggableService.Sample](https://github.com/abhijeetd/Pluggable-service-framework/tree/master/PluggableService/PluggableService.Sample) for sample implementation
+* See [PluggableService.Container.Console](https://github.com/abhijeetd/Pluggable-service-framework/tree/master/PluggableService/PluggableService.Container.Console) for sample of how to host/invoke this pluggable service 
 
 ### Getting started
-1. Create your service class by extending *BaseService* class
+
+There are mainly 4 main components:
+* **ServiceContext** - service specific service context 
+* **ServiceContextProvider** - Context provider that returns an instance of service specific ServiceContext
+* **Service** - Actual service that implements specific functionality
+* **Plugin** - One or more plugins that can be injected into the service for specific processing 
+ 
+
+
+Create service specific ServiceContext extending *ServiceContext* class
 
 ```
+      public class SampleServiceContext : ServiceContext
+      {
+            public string SampleProperty { get; set; }
+      }
+```   
 
+Create context provider by implementing *IContextProvider* interface
+
+```
+      public class SampleContextProvider : IContextProvider
+      {
+            public ServiceContext GetServiceContext()
+            {
+                  var registeredPlugins = new List<Plugin>();
+                  registeredPlugins.Add(new Plugin { 
+                  Classname = "PluggableService.Sample.SamplePlugin, PluggableService.Sample" 
+                  });
+
+                  return new SampleServiceContext 
+                        { 
+                              SampleProperty = "test data", 
+                              Plugins = registeredPlugins 
+                        };
+            }
+    }
+```   
+
+
+Create your service class by extending *BaseService* class
+
+```
       public class HelloWorldService : BaseService
       {
-            protected override ServiceContext OnInitialize()
-            {
-                  // Register plugins - you can read it from XML file, or database or any external source and instantiate them
-                  var registeredPlugins = new List<Plugin>();
-                  registeredPlugins.Add(new Plugin { Classname = "PluggableService.Sample.SamplePlugin, PluggableService.Sample" });
-
-                  return new SampleServiceContext { SampleProperty = "test data", Plugins = registeredPlugins };
-            }
-
             protected override void Run(ServiceContext context)
             {
                   var plugin = PluginService.GetPlugin<SamplePlugin>("SampleType");
 
-                  Debug.WriteLine("Instance type: {0}", plugin.GetType());
+                  Console.WriteLine("Instance type: {0}", plugin.GetType());
             }
       }
 ```
 
-2. Create custom plugin by extending *Plugin* class
+Create custom plugin by extending *Plugin* class
 
 ```
-
       public class SamplePlugin : Plugin
       {
             public SamplePlugin()
@@ -41,5 +72,7 @@ The code base also has a sample implementation.
                   PluginType = "SampleType";
             }
       }
-
 ```   
+ 
+
+
