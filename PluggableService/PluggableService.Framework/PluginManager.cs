@@ -44,6 +44,10 @@ namespace PluggableService.Framework
                 {
                     current.Clone(p);
                     current.InitializeParameters();
+                    if (current.Plugins != null && current.Plugins.Count > 0)
+                    {
+                        current.Plugins = InstantiatePlugins(current.Plugins).ToList();
+                    }
                     loadedPlugins.Add(current);
                 }
             });

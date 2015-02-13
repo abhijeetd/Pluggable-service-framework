@@ -14,12 +14,14 @@ namespace PluggableService.Framework
         public string PluginType { get; set; }
 
         public List<Parameter> Parameters { get; set; }
+        public List<Plugin> Plugins { get; set; }
 
         public void Clone(Plugin plugin)
         {
             this.Title = plugin.Title;
             this.Description = plugin.Description;
             this.Parameters = plugin.Parameters;
+            this.Plugins = plugin.Plugins;
         }
 
         public virtual void InitializeParameters()
@@ -35,6 +37,24 @@ namespace PluggableService.Framework
                     }
                 });
             }
+        }
+
+        public T GetPlugin<T>() where T : Plugin
+        {
+            if (Plugins == null)
+            {
+                return default(T);
+            }
+            return Plugins.Where(p => p.PluginType == typeof(T).FullName).SingleOrDefault() as T;
+        }
+
+        public List<T> GetPlugins<T>() where T : Plugin
+        {
+            if (Plugins == null)
+            {
+                return null;
+            }
+            return Plugins.Where(p => p.PluginType == typeof(T).FullName).Select(p => (T)p).ToList();
         }
     }
 }
