@@ -6,6 +6,7 @@ A simple framework to get started with building extensible application that is b
 * See [PluggableService.Sample](https://github.com/abhijeetd/Pluggable-service-framework/tree/master/PluggableService/PluggableService.Sample) for sample implementation
 * See [PluggableService.Container.Console](https://github.com/abhijeetd/Pluggable-service-framework/tree/master/PluggableService/PluggableService.Container.Console) for sample of how to host/invoke this pluggable service 
 
+A real world implementation of this can be found at **[DONE criteria evaluation tool](https://github.com/abhijeetd/Agile-done-criteria-evaluator)**
 ### Getting started
 
 There are mainly 4 main components:
