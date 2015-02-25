@@ -33,7 +33,10 @@ namespace PluggableService.Framework
                     var property = this.GetType().GetProperty(p.Key);
                     if (property != null)
                     {
-                        property.SetValue(this, Convert.ChangeType(p.Value, property.PropertyType), null);
+                        if (property.PropertyType.IsEnum)
+                            property.SetValue(this, Enum.Parse(property.PropertyType, p.Value));
+                        else
+                            property.SetValue(this, Convert.ChangeType(p.Value, property.PropertyType), null);
                     }
                 });
             }
